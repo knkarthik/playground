@@ -1,0 +1,90 @@
+---
+title: "R"
+author: "Karthik"
+date: "13 November 2015"
+output: html_document
+---
+# Introduction to R
+##Types of objects:
+![Basic objects](/home/karthik/Rintro.png)
+
+Use *str()* to see the structure of an object:
+
+```{r}
+x_vector = c(1,2,3,4)
+str(x_vector)
+x_list = list(foo = c(34,12,1), bar=c("foo", "bar"))
+str(x_list)
+x_matrix = matrix(x_vector, nrow = 2)
+str(x_matrix)
+str(cars)
+```
+
+##Vectors
+
+* Basic data type in R
+* 2 flavours: Atomic vectors and lists
+* 3 common properties: *typeof()*, *length()*, and *attributes()*
+```{r}
+typeof(x_vector)
+length(x_vector)
+attributes(x_list)
+```
+**Note:** Use *is.atomic() || is.list()* to check if an object is a vector. *is.vector* returns TRUE only if the object is a vector with no attributes apart from names.
+```{r}
+#this is wrong as we know x_list is a list!
+is.vector(x_list) && is.vector(x_vector)
+#this works!
+is.atomic(x_list) || is.list(x_list)
+#this as well
+is.list(x_vector)
+```
+####Atomic vectors
+* Character 
+* Numeric - double-precision real numbers like 1.0 
+* Integer - 'normal' numbers like 1, 2, 3
+* Logical 
+* Less used ones: complex and raw
+
+Prefix *L* after the number to make it integer type:
+```{r}
+var = c(1,2,3)
+#default type is double/numeric
+typeof(var)
+int_var = c(1L,2L,3L)
+typeof(int_var)
+```
+####Coersion
+All elements of atomic vectors must be of same type. If not they will be coerced to tbe most flexible type (imlicit coersion). Types from least to most flexible are: logical, integer,double, and character.
+
+```{r}
+#character and integer gives a character
+str(c(1,2,"a"))
+#Logical and integer gives integer/double
+str(c(1,2, TRUE))
+```
+You can also explicity coerce the type of an object using *as.x()* functions.
+
+```{r}
+as.numeric(c(TRUE,FALSE, FALSE, TRUE))
+as.logical(c(1,1,0,1))
+```
+Nonsensical coercions will produce an error as in:
+
+```{r}
+as.integer(c("a","b"))
+```
+####Lists
+
+* Elements in a list can be of multiple type, includeing lists
+
+```{r}
+#create a list
+x_list2 = list(Numbers=1:3, Logic=c(TRUE, TRUE, FALSE), Alphabets=letters[1:4])
+#see the structure of a list
+str(x_list2)
+#convert to vector
+unlist(x_list2)
+#convert a vector to list
+str(as.list(x_vector))
+```
